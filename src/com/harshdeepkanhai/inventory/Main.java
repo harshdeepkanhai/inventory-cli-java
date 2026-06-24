@@ -1,6 +1,7 @@
 package com.harshdeepkanhai.inventory;
 
 import java.util.Scanner;
+import java.util.Arrays;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -29,16 +30,14 @@ public class Main {
                     System.out.println("Bye!");
                 }
                 default -> System.out.println(
-                        "Unknown command. Type 'help'."
-                );
+                        "Unknown command. Type 'help'.");
             }
         }
         scanner.close();
     }
 
     private static void handleAdd(
-            Scanner sc, Inventory inv
-    ) {
+            Scanner sc, Inventory inv) {
         System.out.print("Name: ");
         String name = sc.nextLine().trim();
         System.out.print("Price: ");
@@ -46,22 +45,25 @@ public class Main {
             double price = Double.parseDouble(sc.nextLine().trim());
             System.out.print("Quantity: ");
             int qty = Integer.parseInt(sc.nextLine().trim());
-            inv.addItem(new Item(name, price, qty));
+            System.out.print("Category: ");
+            String category = sc.nextLine().trim();
+            inv.addItem(new Item(name, price, qty, Category.valueOf(category.toUpperCase())));
         } catch (NumberFormatException e) {
             System.out.println("Invalid number, Item not added.");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid Category, Item not added. Valid Categoties are: " +
+                    Arrays.toString(Category.values()));
         }
     }
 
     private static void handleRemove(
-            Scanner sc, Inventory inv
-    ) {
+            Scanner sc, Inventory inv) {
         System.out.print("Item Name to remove: ");
         inv.removeItem(sc.nextLine().trim());
     }
 
     private static void handleUpdate(
-            Scanner sc, Inventory inv
-    ) {
+            Scanner sc, Inventory inv) {
         System.out.print("Item name: ");
         String name = sc.nextLine().trim();
         System.out.print("New Quantity: ");
@@ -74,20 +76,17 @@ public class Main {
     }
 
     private static void handleSearch(
-            Scanner sc, Inventory inv
-    ) {
+            Scanner sc, Inventory inv) {
         System.out.print("Search name: ");
         String name = sc.nextLine().trim();
         inv.findItem(name).ifPresentOrElse(
                 item -> System.out.println("Found: " + item),
-                () -> System.out.println("Not found: " + name)
-        );
+                () -> System.out.println("Not found: " + name));
     }
 
     private static void printMenu() {
         System.out.println(
-                "Commands: add | remove | update | search | list | quit"
-        );
+                "Commands: add | remove | update | search | list | quit");
     }
 
 }
