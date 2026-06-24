@@ -23,7 +23,7 @@ public class Inventory {
         String key = name.toLowerCase();
         Item removed = items.remove(key);
         if (removed == null) {
-            System.out.println("Item not found: " + name);
+            throw new ItemNotFoundException("Item not found: " + name);
         } else {
             System.out.println("Removed: " + removed.getName());
         }
@@ -34,12 +34,9 @@ public class Inventory {
     }
 
     public void updateQuantity(String name, int newQty) {
-        findItem(name).ifPresentOrElse(
-                item -> {
-                    item.setQuantity(newQty);
-                    System.out.println("Updated: " + item);
-                },
-                () -> System.out.println("Not found: " + name));
+        Item item = findItem(name).orElseThrow(() -> new ItemNotFoundException("Item not found: " + name));
+        item.setQuantity(newQty);
+        System.out.println("Updated: " + item);
     }
 
     public void listAll() {

@@ -71,7 +71,11 @@ public class Main {
     private static void handleRemove(
             Scanner sc, Inventory inv) {
         System.out.print("Item Name to remove: ");
-        inv.removeItem(sc.nextLine().trim());
+        try {
+            inv.removeItem(sc.nextLine().trim());
+        } catch (ItemNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private static void handleUpdate(
@@ -84,6 +88,8 @@ public class Main {
             inv.updateQuantity(name, qty);
         } catch (NumberFormatException e) {
             System.out.println("Invalid quantity.");
+        } catch (ItemNotFoundException e) {
+            System.out.println(e.getMessage());
         }
     }
 
