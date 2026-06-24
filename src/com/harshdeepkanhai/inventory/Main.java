@@ -15,7 +15,7 @@ public class Main {
         printMenu();
 
         while (running) {
-            System.out.println("\n> ");
+            System.out.print("\n> ");
             String command = scanner.nextLine().trim().toLowerCase();
 
             switch (command) {
@@ -24,6 +24,7 @@ public class Main {
                 case "update" -> handleUpdate(scanner, inventory);
                 case "search" -> handleSearch(scanner, inventory);
                 case "list" -> inventory.listAll();
+                case "bycategory" -> handleByCategory(scanner, inventory);
                 case "help" -> printMenu();
                 case "quit" -> {
                     running = false;
@@ -34,6 +35,17 @@ public class Main {
             }
         }
         scanner.close();
+    }
+
+    private static void handleByCategory(Scanner sc, Inventory inv) {
+        System.out.println("Category: ");
+        try {
+            Category category = Category.valueOf(sc.nextLine().trim().toUpperCase());
+            inv.listByCategory(category);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid Category Entered");
+        }
+
     }
 
     private static void handleAdd(
@@ -51,7 +63,7 @@ public class Main {
         } catch (NumberFormatException e) {
             System.out.println("Invalid number, Item not added.");
         } catch (IllegalArgumentException e) {
-            System.out.println("Invalid Category, Item not added. Valid Categoties are: " +
+            System.out.println("Invalid Category, Item not added. Valid Categories are: " +
                     Arrays.toString(Category.values()));
         }
     }
@@ -86,7 +98,7 @@ public class Main {
 
     private static void printMenu() {
         System.out.println(
-                "Commands: add | remove | update | search | list | quit");
+                "Commands: add | remove | update | search | list | bycategory | quit");
     }
 
 }

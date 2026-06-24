@@ -1,6 +1,7 @@
 package com.harshdeepkanhai.inventory;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -38,8 +39,7 @@ public class Inventory {
                     item.setQuantity(newQty);
                     System.out.println("Updated: " + item);
                 },
-                () -> System.out.println("Not found: " + name)
-        );
+                () -> System.out.println("Not found: " + name));
     }
 
     public void listAll() {
@@ -53,6 +53,16 @@ public class Inventory {
                 .mapToDouble(Item::totalValue)
                 .sum();
         System.out.printf("Total value: $%.2f%n", total);
+    }
+
+    public void listByCategory(Category c) {
+        List<Item> matches = items.values().stream()
+                .filter(item -> item.getCategory() == c).toList();
+        if (matches.isEmpty()) {
+            System.out.println("Nothing in this Category");
+        } else {
+            matches.forEach(System.out::println);
+        }
     }
 
 }
