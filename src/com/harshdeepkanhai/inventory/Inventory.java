@@ -1,5 +1,6 @@
 package com.harshdeepkanhai.inventory;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,10 @@ public class Inventory {
 
     private Map<String, Item> items = new HashMap<>();
 
+    public Collection<Item> getAllItems() {
+        return items.values();
+    }
+
     public void addItem(Item item) {
         String key = item.getName().toLowerCase();
         if (items.containsKey(key)) {
@@ -17,6 +22,12 @@ public class Inventory {
         }
         items.put(key, item);
         System.out.println("Added: " + item);
+    }
+
+    public void loadItems(List<Item> loadedItems) {
+        for (Item item : loadedItems) {
+            this.items.put(item.getName().toLowerCase(), item);
+        }
     }
 
     public void removeItem(String name) {

@@ -41,4 +41,8 @@ public class Item {
     public String toString() {
         return String.format("%s | $%.2f | qty: %d | category %s", name, price, quantity, category);
     }
+
+    public String toCsv() {
+        return name + "," + price + "," + quantity + "," + category;
+    }
 }

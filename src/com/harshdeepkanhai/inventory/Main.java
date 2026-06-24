@@ -6,11 +6,15 @@ import java.util.Arrays;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
+    private static final String FILENAME = "inventory.csv";
+
     public static void main(String[] args) {
         Inventory inventory = new Inventory();
+        FileStore store = new FileStore();
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
 
+        inventory.loadItems(store.loadFromFile(FILENAME));
         System.out.println("=== Inventory Manager ===");
         printMenu();
 
@@ -27,6 +31,7 @@ public class Main {
                 case "bycategory" -> handleByCategory(scanner, inventory);
                 case "help" -> printMenu();
                 case "quit" -> {
+                    store.saveToFile(FILENAME, inventory.getAllItems());
                     running = false;
                     System.out.println("Bye!");
                 }
