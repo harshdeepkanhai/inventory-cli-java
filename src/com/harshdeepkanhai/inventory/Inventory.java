@@ -41,6 +41,12 @@ public class Inventory {
         }
     }
 
+    public void lowStockAlert(int threshold) {
+        items.values().stream()
+                .filter(item -> item.getQuantity() < threshold)
+                .forEach(System.out::println);
+    }
+
     public Optional<Item> findItem(String name) {
         return Optional.ofNullable(items.get(name.toLowerCase()));
     }

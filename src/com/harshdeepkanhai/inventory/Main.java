@@ -27,6 +27,7 @@ public class Main {
                 case "remove" -> handleRemove(scanner, inventory);
                 case "update" -> handleUpdate(scanner, inventory);
                 case "search" -> handleSearch(scanner, inventory);
+                case "lowstock" -> handleLowStock(scanner, inventory);
                 case "list" -> inventory.listAll();
                 case "sorted" -> inventory.listSorted();
                 case "bycategory" -> handleByCategory(scanner, inventory);
@@ -41,6 +42,16 @@ public class Main {
             }
         }
         scanner.close();
+    }
+
+    private static void handleLowStock(Scanner sc, Inventory inv) {
+        System.out.println("Threshold: ");
+        try {
+            Integer threshold = Integer.parseInt(sc.nextLine().trim());
+            inv.lowStockAlert(threshold);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid Number Format");
+        }
     }
 
     private static void handleByCategory(Scanner sc, Inventory inv) {
@@ -110,7 +121,7 @@ public class Main {
 
     private static void printMenu() {
         System.out.println(
-                "Commands: add | remove | update | search | list | sorted | bycategory | quit");
+                "Commands: add | remove | update | search | lowstock | list | sorted | bycategory | quit");
     }
 
 }
