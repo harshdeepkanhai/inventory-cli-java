@@ -1,6 +1,7 @@
 package com.harshdeepkanhai.inventory;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,6 +62,12 @@ public class Inventory {
                 .mapToDouble(Item::totalValue)
                 .sum();
         System.out.printf("Total value: $%.2f%n", total);
+    }
+
+    public void listSorted() {
+        items.values().stream()
+                .sorted(Comparator.comparing(Item::getName, String.CASE_INSENSITIVE_ORDER))
+                .forEach(System.out::println);
     }
 
     public void listByCategory(Category c) {

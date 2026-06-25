@@ -28,6 +28,7 @@ public class Main {
                 case "update" -> handleUpdate(scanner, inventory);
                 case "search" -> handleSearch(scanner, inventory);
                 case "list" -> inventory.listAll();
+                case "sorted" -> inventory.listSorted();
                 case "bycategory" -> handleByCategory(scanner, inventory);
                 case "help" -> printMenu();
                 case "quit" -> {
@@ -109,7 +110,7 @@ public class Main {
 
     private static void printMenu() {
         System.out.println(
-                "Commands: add | remove | update | search | list | bycategory | quit");
+                "Commands: add | remove | update | search | list | sorted | bycategory | quit");
     }
 
 }
