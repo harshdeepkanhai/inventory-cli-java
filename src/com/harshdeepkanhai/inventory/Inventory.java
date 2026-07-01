@@ -48,6 +48,7 @@ public class Inventory {
     }
 
     public Optional<Item> findItem(String name) {
+        if (name == null) return Optional.empty();
         return Optional.ofNullable(items.get(name.toLowerCase()));
     }
 
@@ -68,6 +69,13 @@ public class Inventory {
                 .mapToDouble(Item::totalValue)
                 .sum();
         System.out.printf("Total value: $%.2f%n", total);
+    }
+
+    // inside Inventory.java
+    public double getTotalValue() {
+        return items.values().stream()
+                .mapToDouble(i -> i.getPrice() * i.getQuantity())
+                .sum();
     }
 
     public void listSorted() {
