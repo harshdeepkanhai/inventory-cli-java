@@ -48,7 +48,8 @@ public class Inventory {
     }
 
     public Optional<Item> findItem(String name) {
-        if (name == null) return Optional.empty();
+        if (name == null)
+            return Optional.empty();
         return Optional.ofNullable(items.get(name.toLowerCase()));
     }
 
@@ -65,16 +66,13 @@ public class Inventory {
         }
         System.out.println("\n--- Inventory ---");
         items.values().forEach(System.out::println);
-        double total = items.values().stream()
-                .mapToDouble(Item::totalValue)
-                .sum();
+        double total = this.getTotalValue();
         System.out.printf("Total value: $%.2f%n", total);
     }
 
-    // inside Inventory.java
     public double getTotalValue() {
         return items.values().stream()
-                .mapToDouble(i -> i.getPrice() * i.getQuantity())
+                .mapToDouble(Item::totalValue)
                 .sum();
     }
 
